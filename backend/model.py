@@ -8,7 +8,7 @@ import torch
 dotenv_path = Path(__file__).parent / ".env"
 load_dotenv(dotenv_path)
 HF_TOKEN = os.getenv("HUGGINGFACE_HUB_TOKEN")
-print(HF_TOKEN[:5])
+
 
 
 MODEL_NAME = "mistralai/Mistral-7B-Instruct-v0.2"
