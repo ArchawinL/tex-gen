@@ -4,7 +4,9 @@ from .model import generator
 
 
 app = FastAPI()
-
+@app.get("/")
+async def root():
+    return {"message": "FastAPI backend is running"}
 
 @app.post("/chat/")
 async def chat(message: dict):
