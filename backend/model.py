@@ -10,11 +10,8 @@ load_dotenv(dotenv_path)
 HF_TOKEN = os.getenv("HUGGINGFACE_HUB_TOKEN")
 
 
-
-MODEL_NAME = "mistralai/Mistral-7B-Instruct-v0.2"
-
+MODEL_NAME = "microsoft/Phi-3.5-mini-instruct"
 print(f"Loading {MODEL_NAME}")
-
 
 
 tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, token=HF_TOKEN)
@@ -25,6 +22,7 @@ model = AutoModelForCausalLM.from_pretrained(
     token=HF_TOKEN
 )
 
+print("Cuda available:", torch.cuda.is_available())
 
 generator = pipeline(
     "text-generation",
@@ -32,3 +30,11 @@ generator = pipeline(
     tokenizer=tokenizer,
 )
 
+def generate_response(prompt: str, max_new_tokens=200, temperature=0.5):
+    out = generator(prompt, max_new_tokens=max_new_tokens, temperature=temperature)
+    return out[0]["generated_text"]
+
+
+#prompt = "### Instruction:\nWrite exactly 'Hello World' and nothing else."
+#outputs = generator(prompt, max_new_tokens=50, temperature=0.7)
+#print(outputs[0]['generated_text'])
